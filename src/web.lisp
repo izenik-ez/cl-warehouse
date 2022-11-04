@@ -24,15 +24,19 @@
 
 (mito:connect-toplevel :sqlite3 :database-name
                        (merge-pathnames #P"warehouse.db" *application-root*))
+(mito:deftable warehouses ()
+  ((location :col-type (:varchar 50))   
+   (capacity :col-type (:integer))))
+
+
 (mito:deftable boxes ()
   ((contents :col-type (:varchar 10))
    (value :col-type (:integer))
    (warehouse :col-type warehouses :references warehouses)))
 
-(mito:deftable boxes ()
-  ((contents :col-type (:varchar 50))
-   (value :col-type (:integer))
-   (warehouse :col-type warehouses :references warehouses)))
+  
+(mito:ensure-table-exists 'warehouses)
+(mito:ensure-table-exists 'boxes)
 
 ;; utils
 (defun get-param (name parsed)
