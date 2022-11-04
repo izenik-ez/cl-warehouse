@@ -16,6 +16,7 @@
                "djula"
 
                ;; for DB
+               "mito"
                "datafly"
                "sxql")
   :components ((:module "src"
