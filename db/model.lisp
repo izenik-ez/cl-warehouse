@@ -1,10 +1,10 @@
-(defpackage :cl-warehouse-schema
+(defpackage :cl-warehouse-model
   (:use :cl :mito)
   (:import-from :cl-warehouse.db
    :connection-settings :with-connection)
   (:export :create-tables :insert-data))
 
-(in-package :cl-warehouse-schema)
+(in-package :cl-warehouse-model)
 
 
 (mito:deftable warehouses ()
@@ -16,14 +16,13 @@
    (value :col-type (:integer))
    (warehouse :col-type warehouses :references warehouses)))
 
-(defun create-tables (tables)
-  (mapcar #'mito:ensure-table-exists tables))
+(defun create-tables ()
+  (mapcar #'mito:ensure-table-exists '(warehouses boxes)))
 
 (defun insert-data ()
   (insert-data-for-warehouses)
   (insert-data-for-boxes))
 
-(create-tables '(warehouses boxes))
 
 
 
